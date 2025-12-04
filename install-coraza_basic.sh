@@ -10,13 +10,13 @@
 
 systemctl stop unattended-upgrades.service
 
-apt-get update -y
+apt update -y
 
-apt-get upgrade -y
+apt upgrade -y
 
-apt-get install pkg-config make gcc -y
+apt install pkg-config make gcc -y
 
-apt-get install git -y
+apt install git -y
 
 snap install go --classic
 
@@ -119,17 +119,17 @@ chmod 700 /etc/coraza-spoa/rules
 chmod 700 /etc/coraza-spoa/plugins
 
 #SERVICE CONFIGURATION
-cp -a ./contrib/coraza-spoa.service /lib/systemd/system/coraza-spoa.service 
+cp -a ./coraza-spoa/contrib/coraza-spoa.service /lib/systemd/system/coraza-spoa.service 
 systemctl daemon-reload
 systemctl enable coraza-spoa.service 
 
 #INSTALLATION AND CONFIGURATION HAPROXY
 
-apt-get install haproxy -y
+apt install haproxy -y
 
 
 #CONFIGURATION FILE SPOA
-cp -a ./doc/config/coraza.cfg /etc/haproxy/coraza.cfg
+cp -a ./coraza-spoa/example/haproxy/coraza.cfg /etc/haproxy/coraza.cfg
 
 #CHANGE THE CONFIGURATION WITH THE NAME OF THE APP
 sed -i 's/app=str(sample_app) id=unique-id src-ip=src/app=str(haproxy_waf) id=unique-id src-ip=src/' /etc/haproxy/coraza.cfg
