@@ -10,22 +10,21 @@
 
 systemctl stop unattended-upgrades.service
 
-apt update -y
+apt update && apt upgrade -y
 
-apt upgrade -y
+apt install pkg-config make gcc git -y
 
-apt install pkg-config make gcc -y
-
-apt install git -y
-
-snap install go --classic
+# Install Golang 1.25.5
+wget https://go.dev/dl/go1.25.5.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.25.5.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
 
 git clone https://github.com/corazawaf/coraza-spoa.git
 
 cd ./coraza-spoa
 
 #START THE COMPILATION
-make
+go run mage.go build
 
 #CREATE THE USERS AND THE GROUP
 addgroup --quiet --system coraza-spoa
